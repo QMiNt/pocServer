@@ -50,7 +50,7 @@ app.get('/oauth2callback', async (req, res) => {
         oAuth2Client.setCredentials(tokens);
         // Store tokens in secure HTTP-only cookie
         delete tokens.refresh_token;
-        res.cookie('tokens', JSON.stringify(tokens), { httpOnly: true, secure: true });
+        res.cookie('tokens', JSON.stringify(tokens), { httpOnly: true, secure: true,domain:process.env.CLIENT });
         res.redirect(process.env.CLIENT);
     } catch (error) {
         console.error('Error retrieving access token', error);
