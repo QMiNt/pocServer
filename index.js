@@ -12,7 +12,15 @@ app.use(cors(
         credentials: true
     }
 ));
-const PORT = 5000;
+const options = {
+    expires:new Date(
+    Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000 // calucate in milisec
+    ),
+    secure: true,//use this when the code is in production for https cookie request
+    httpOnly:true,
+    sameSite: 'None',//dealing with cross-site requests and the usage of third-party cookies
+    };
+const PORT = 443;
 
 const CLIENT_ID = process.env.CLIENTID;
 const CLIENT_SECRET = process.env.CLIENTSECRET;
@@ -50,7 +58,7 @@ app.get('/oauth2callback', async (req, res) => {
         oAuth2Client.setCredentials(tokens);
         // Store tokens in secure HTTP-only cookie
         delete tokens.refresh_token;
-        res.cookie('tokens', JSON.stringify(tokens), { httpOnly: true, secure: true,domain:process.env.CLIENT });
+        res.cookie('tokens', JSON.stringify(tokens), options);
         res.redirect(process.env.CLIENT);
     } catch (error) {
         console.error('Error retrieving access token', error);
