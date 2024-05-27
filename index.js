@@ -26,7 +26,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 app.use(cookieParser());
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT);
+    res.setHeader('Access-Control-Allow-Origin', 'https://pocdocwriter.vercel.app');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader('Access-Control-Allow-Credentials', 'true'); // Set to true
